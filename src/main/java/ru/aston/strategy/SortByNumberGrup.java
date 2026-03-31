@@ -1,6 +1,6 @@
 package ru.aston.strategy;
 
-import ru.aston.entity;
+import ru.aston.entity.Student;
 import java.util.Comparator;
 import java.util.List;
 

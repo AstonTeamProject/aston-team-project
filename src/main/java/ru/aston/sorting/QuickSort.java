@@ -4,7 +4,7 @@ import java.util.Comparator;
 import ru.aston.entity.Student;
 import ru.aston.entity.CustomStudentCollection;
 
-public class QuickSort implements SortStrategy {
+public class QuickSort implements SortStrategy{
     public void quickSort(CustomStudentCollection collection, int left, int right, Comparator<Student> comparator) {
         if (left >= right) {
             return;
@@ -37,7 +37,7 @@ public class QuickSort implements SortStrategy {
     }
 
     @Override
-    public void sort(CustomStudentCollection collection, Comparator comparator) {
+    public void sort(CustomStudentCollection collection, Comparator<Student> comparator) {
         if (collection == null || collection.size() <= 1) {
             return;
         }

@@ -4,7 +4,7 @@ import java.util.Comparator;
 import ru.aston.entity.CustomStudentCollection;
 import ru.aston.entity.Student;
 
-public class Sorter {
+public class Sorter implements SortStrategy {
 
     private SortStrategy sortStrategy;
 
@@ -16,6 +16,7 @@ public class Sorter {
         this.sortStrategy = sortStrategy;
     }
 
+    @Override
     public void sort(CustomStudentCollection collection, Comparator<Student> comparator) {
         if (sortStrategy == null) {
             throw new IllegalStateException("Sort strategy is not set");

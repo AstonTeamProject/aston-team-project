@@ -1,14 +1,13 @@
 package ru.aston.strategy;
 
-import ru.aston.entity.СustomStudentCollection;
+import ru.aston.entity.CustomStudentCollection;
 import ru.aston.entity.Student;
 import java.util.Comparator;
-import java.util.List;
 
 public interface SortStrategy {
-    void sort(СustomStudentCollection collection);
+    void sort(CustomStudentCollection collection);
 
-    default void quickSort(СustomStudentCollection collection, Comparator<Student> comparator, int left, int right) {
+    default void quickSort(CustomStudentCollection collection, Comparator<Student> comparator, int left, int right) {
         if (left >= right) {
             return;
         }
@@ -17,7 +16,7 @@ public interface SortStrategy {
         quickSort(collection, comparator, pivotIndex + 1, right);
     }
 
-    default int partition(СustomStudentCollection collection, Comparator<Student> comparator, int left, int right) {
+    default int partition(CustomStudentCollection collection, Comparator<Student> comparator, int left, int right) {
         Student pivot = collection.get(right);
         int i = left - 1;
 
@@ -31,7 +30,7 @@ public interface SortStrategy {
         return i + 1;
     }
 
-    default void swap(СustomStudentCollection collection, int i, int j) {
+    default void swap(CustomStudentCollection collection, int i, int j) {
         if (i != j) {
             Student temp = collection.get(i);
             collection.set(i, collection.get(j));

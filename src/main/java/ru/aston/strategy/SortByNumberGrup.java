@@ -1,9 +1,8 @@
 package ru.aston.strategy;
 
-import ru.aston.entity.СustomStudentCollection;
+import ru.aston.entity.CustomStudentCollection;
 import ru.aston.entity.Student;
 import java.util.Comparator;
-import java.util.List;
 
 public class SortByNumberGrup implements SortStrategy {
 
@@ -22,7 +21,7 @@ public class SortByNumberGrup implements SortStrategy {
      */
 
     @Override
-    public void sort(СustomStudentCollection collection) {
+    public void sort(CustomStudentCollection collection) {
         if (collection == null || collection.size() <= 1) {
             return;
         }

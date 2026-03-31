@@ -11,7 +11,6 @@ import ru.aston.entity.Student;
 public class Sorter {
 
     private SortStrategy sortStrategy;
-    private String sortByField;
 
     public Sorter(SortStrategy sortStrategy) {
         this.sortStrategy = sortStrategy;
@@ -28,42 +27,13 @@ public class Sorter {
     /**
      * Выполнить сортировку коллекции.
      * @param collection коллекция студентов
+     * @param comparator компаратор для сравнения студентов
      */
-    public void sort(CustomStudentCollection collection) {
+    public void sort(CustomStudentCollection collection, Comparator<Student> comparator) {
         if (sortStrategy == null) {
             throw new IllegalStateException("Sort strategy is not set");
         }
-        Comparator<Student> comparator = createComparator();
         sortStrategy.sort(collection, comparator);
-    }
-
-    /**
-     * Создать компаратор на основе поля сортировки.
-     * @return компаратор для сравнения студентов
-     */
-    private Comparator<Student> createComparator() {
-        if (sortByField == null || sortByField.isEmpty()) {
-            return Comparator.comparing(Student::getGroupNumber);
-        }
-
-        switch (sortByField) {
-            case "groupNumber":
-                return Comparator.comparing(Student::getGroupNumber);
-            case "averageScore":
-                return Comparator.comparingDouble(Student::getAverageScore);
-            case "gradeBookNumber":
-                return Comparator.comparing(Student::getGradeBookNumber);
-            default:
-                return Comparator.comparing(Student::getGroupNumber);
-        }
-    }
-
-    /**
-     * Установить поле для сортировки.
-     * @param sortByField название поля: "groupNumber", "averageScore", "gradeBookNumber"
-     */
-    public void setSortByField(String sortByField) {
-        this.sortByField = sortByField;
     }
 
     /**
@@ -72,13 +42,5 @@ public class Sorter {
      */
     public SortStrategy getSortStrategy() {
         return sortStrategy;
-    }
-
-    /**
-     * Получить поле, по которому выполняется сортировка.
-     * @return название поля
-     */
-    public String getSortByField() {
-        return sortByField;
     }
 }

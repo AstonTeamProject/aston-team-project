@@ -40,7 +40,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-### Local only ###
-src/main/java/ru/aston/entity/Student.java
-src/main/java/ru/aston/entity/CustomStudentCollection.java

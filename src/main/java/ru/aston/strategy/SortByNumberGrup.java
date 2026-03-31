@@ -1,5 +1,6 @@
 package ru.aston.strategy;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class SortByNumberGrup implements SortStrategy {
@@ -8,4 +9,5 @@ public class SortByNumberGrup implements SortStrategy {
     public void sort(List<?> list) {
         // TODO: реализация сортировки
     }
+    Comparator<> comparator = Comparator
 }

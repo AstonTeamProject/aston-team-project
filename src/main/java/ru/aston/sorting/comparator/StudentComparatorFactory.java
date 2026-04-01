@@ -15,13 +15,11 @@ public class StudentComparatorFactory {
         ALL
     }
 
-    private static final Map<Field, Function<SortDirection, Comparator<Student>>> COMPARATORS =
-        Map.of(
+    private static final Map<Field, Function<SortDirection, Comparator<Student>>> COMPARATORS = Map.of(
             Field.GROUP_NUMBER, StudentGroupNumberComparator::new,
             Field.AVERAGE_SCORE, StudentAverageScoreComparator::new,
             Field.GRADE_BOOK_NUMBER, StudentGradeBookNumberComparator::new,
-            Field.ALL, StudentAllFieldsComparator::new
-        );
+            Field.ALL, StudentAllFieldsComparator::new);
 
     public static Comparator<Student> create(Field field, SortDirection direction) {
         Function<SortDirection, Comparator<Student>> factory = COMPARATORS.get(field);

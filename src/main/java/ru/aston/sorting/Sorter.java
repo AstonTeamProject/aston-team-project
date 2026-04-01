@@ -1,7 +1,7 @@
 package ru.aston.sorting;
 
 import java.util.Comparator;
-import ru.aston.entity.CustomStudentCollection;
+import java.util.List;
 import ru.aston.entity.Student;
 
 public class Sorter {
@@ -17,11 +17,11 @@ public class Sorter {
     }
 
     @Override
-    public void sort(CustomStudentCollection collection, Comparator<Student> comparator) {
+    public void sort(List<Student> list, Comparator<Student> comparator) {
         if (sortStrategy == null) {
             throw new IllegalStateException("Sort strategy is not set");
         }
-        sortStrategy.sort(collection, comparator);
+        sortStrategy.sort(list, comparator);
     }
 
     public SortStrategy getSortStrategy() {

@@ -1,9 +1,9 @@
 package ru.aston.sorting;
 
 import java.util.Comparator;
-import ru.aston.entity.CustomStudentCollection;
+import java.util.List;
 import ru.aston.entity.Student;
 
 public interface SortStrategy {
-    void sort(CustomStudentCollection collection, Comparator<Student> comparator);
+    void sort(List<Student> list, Comparator<Student> comparator);
 }

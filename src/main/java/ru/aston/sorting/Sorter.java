@@ -4,7 +4,7 @@ import java.util.Comparator;
 import ru.aston.entity.CustomStudentCollection;
 import ru.aston.entity.Student;
 
-public class Sorter implements SortStrategy {
+public class Sorter {
 
     private SortStrategy sortStrategy;
 

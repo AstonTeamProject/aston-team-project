@@ -53,7 +53,7 @@ public class Student {
         }
 
         private void validate() {
-            if(groupNumber == null || groupNumber.isBlank()){
+            if (groupNumber == null || groupNumber.isBlank()) {
                 throw new IllegalArgumentException("Group number cant be empty");
             }
 
@@ -68,7 +68,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return String.format("Student[group='%s', score=%.2f, book=%d]",
+        return String.format("Student [group = '%s', score = %.2f, book = %d]",
                 groupNumber, averageScore, gradeBookNumber);
     }
 }

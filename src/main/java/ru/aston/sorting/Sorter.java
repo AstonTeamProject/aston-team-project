@@ -16,7 +16,6 @@ public class Sorter {
         this.sortStrategy = sortStrategy;
     }
 
-    @Override
     public void sort(List<Student> list, Comparator<Student> comparator) {
         if (sortStrategy == null) {
             throw new IllegalStateException("Sort strategy is not set");

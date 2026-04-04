@@ -1,9 +1,10 @@
-package ru.aston.entity;
+package ru.aston.readFromFile;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.*;
 import java.util.stream.Stream;
+import ru.aston.entity.Student;
 
 public class StudentFileReaders {
 
@@ -18,7 +19,7 @@ public class StudentFileReaders {
         this.maxGpa = maxGpa;
     }
 
-    public StudentRecord[] readAll() throws IOException {
+    public Student[] readAll() throws IOException {
         StudentShelf shelf = new StudentShelf();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
@@ -35,7 +36,7 @@ public class StudentFileReaders {
         return shelf.toArray();
     }
 
-    private java.util.Optional<StudentRecord> parseLine(String line) {
+    private java.util.Optional<Student> parseLine(String line) {
         var m = LINE_PATTERN.matcher(line);
         if (!m.matches()) {
             System.err.println("Invalid format, skipped: " + line);
@@ -59,10 +60,10 @@ public class StudentFileReaders {
                 return java.util.Optional.empty();
             }
 
-            StudentRecord s = new StudentRecord.Builder()
+            Student s = new Student.Builder()
                     .groupNumber(group)
-                    .gpa(gpa)
-                    .recordBook(rb)
+                    .averageScore(gpa)
+                    .gradeBookNumber(rb)
                     .build();
             return java.util.Optional.of(s);
         } catch (Exception e) {

@@ -1,22 +1,43 @@
-package ru.aston.entity;
+package ru.aston.readFromFile;
 
+import ru.aston.entity.Student;
 import java.io.InputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentMainReader {
-    public static void main(String[] args) throws Exception {
+    private final String path;
 
-        try (InputStream in = StudentMainReader.class.getClassLoader().getResourceAsStream("students.txt")) {
+    public StudentMainReader(String path) {
+        this.path = path;
+    }
+
+    public void insertStudents(List<Student> studentList) throws IOException {
+        try (InputStream in = StudentMainReader.class.getClassLoader().getResourceAsStream(path)) {
             if (in == null) {
-                System.err.println("Resource students.txt not found in classpath");
+                System.err.println("Resource " + path + " not found in classpath");
                 return;
             }
 
-
             StudentFileReaders reader = new StudentFileReaders(in, 0.0, 5.0);
-            StudentRecord[] arr = reader.readAll();
+            Student[] arr = reader.readAll();
 
             System.out.println("Read " + arr.length + " students");
-            for (StudentRecord s : arr) System.out.println(s);
+            for (Student student : arr) {
+                studentList.add(student);
+            }
         }
     }
+
+    //Для удобства оставлю,чтобы можно было проверить.
+    /*public static void main(String[] args) throws IOException {
+        StudentMainReader testReader = new StudentMainReader("students.txt");
+        List<Student> students = new ArrayList<>();
+        testReader.insertStudents(students);
+
+        for (Student student : students) {
+            System.out.println("Student: " + student);
+        }
+    }*/
 }

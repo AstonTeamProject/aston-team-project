@@ -1,6 +1,6 @@
 package ru.aston.sorting.comparator;
 
-import entity.Student;
+import ru.aston.entity.Student;
 import ru.aston.sorting.SortDirection;
 import java.util.Comparator;
 import java.util.Map;

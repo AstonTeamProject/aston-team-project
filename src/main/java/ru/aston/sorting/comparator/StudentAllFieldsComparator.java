@@ -1,6 +1,6 @@
 package ru.aston.sorting.comparator;
 
-import entity.Student;
+import ru.aston.entity.Student;
 import ru.aston.sorting.SortDirection;
 import java.util.Comparator;
 
@@ -23,7 +23,7 @@ public class StudentAllFieldsComparator implements Comparator<Student> {
             return direction == SortDirection.ASC ? result : -result;
         }
 
-        result = s1.getGradeBookNumber().compareTo(s2.getGradeBookNumber());
+        result = Integer.compare(s1.getGradeBookNumber(), s2.getGradeBookNumber());
         return direction == SortDirection.ASC ? result : -result;
     }
 }

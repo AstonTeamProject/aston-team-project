@@ -1,5 +1,7 @@
 package ru.aston.entity;
 
+import java.util.Locale;
+
 public class Student {
     private final String groupNumber;
     private final double averageScore;
@@ -60,7 +62,7 @@ public class Student {
             if (gradeBookNumber <= 0) {
                 throw new IllegalArgumentException("Grade book number can't be empty.");
             }
-            if (averageScore < 0 || averageScore > 10) {
+            if (averageScore <= 0 || averageScore > 10) {
                 throw new IllegalArgumentException("Average score should be between 0 and 10");
             }
         }
@@ -68,7 +70,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return String.format("Student [group = '%s', score = %.2f, book = %d]",
+        return String.format(Locale.ROOT,"Student [group = '%s', score = %.2f, book = %d]",
                 groupNumber, averageScore, gradeBookNumber);
     }
 }

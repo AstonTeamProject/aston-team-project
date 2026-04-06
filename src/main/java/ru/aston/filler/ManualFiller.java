@@ -13,24 +13,36 @@ public class ManualFiller implements DataFiller {
     private static final double MAX_SCORE = 10.0;
     private static final String SCORE_RANGE_MSG = "from " + MIN_SCORE + " to " + MAX_SCORE;
 
+    private final Scanner scanner;
+
+    public ManualFiller(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
     @Override
-    public List<Student> fill(Scanner scanner, int size) {
+    public List<Student> fill(int size) {
         System.out.println("\n--- Manual filling of student list ---");
 
         List<Student> students = IntStream.range(0, size)
                 .mapToObj(i -> {
                     System.out.printf("\nStudent №%d:\n", i + 1);
-                    return readStudent(scanner);
+                    return readStudent();
                 })
                 .collect(Collectors.toList());
 
-        System.out.println("Manual filling completed.\n");
+        System.out.println("Manual filling completed.");
         return students;
     }
 
-    private Student readStudent(Scanner scanner) {
-        Student.Builder builder = Student.builder();
+    private Student readStudent() {
+        return Student.builder()
+                .groupNumber(readGroupNumber())
+                .averageScore(readAverageScore())
+                .gradeBookNumber(readGradeBookNumber())
+                .build();
+    }
 
+    private String readGroupNumber() {
         while (true) {
             System.out.print("Group number (non-empty string): ");
             String group = scanner.nextLine().trim();
@@ -38,29 +50,31 @@ public class ManualFiller implements DataFiller {
                 if (group.isBlank()) {
                     throw new IllegalArgumentException("Group number cannot be empty");
                 }
-                builder.groupNumber(group);
-                break;
+                return group;
             } catch (IllegalArgumentException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
+    }
 
+    private double readAverageScore() {
         while (true) {
             System.out.print("Average score (number " + SCORE_RANGE_MSG + "): ");
             try {
                 double score = Double.parseDouble(scanner.nextLine().trim());
                 if (score < MIN_SCORE || score > MAX_SCORE) {
-                    throw new IllegalArgumentException("Average score must be" + SCORE_RANGE_MSG);
+                    throw new IllegalArgumentException("Average score must be " + SCORE_RANGE_MSG);
                 }
-                builder.averageScore(score);
-                break;
+                return score;
             } catch (NumberFormatException e) {
                 System.out.println("Error: Please enter a number (e.g., 8.5).");
             } catch (IllegalArgumentException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
+    }
 
+    private int readGradeBookNumber() {
         while (true) {
             System.out.print("Grade book number (integer > 0): ");
             try {
@@ -68,15 +82,12 @@ public class ManualFiller implements DataFiller {
                 if (bookNumber <= 0) {
                     throw new IllegalArgumentException("Grade book number must be positive");
                 }
-                builder.gradeBookNumber(bookNumber);
-                break;
+                return bookNumber;
             } catch (NumberFormatException e) {
                 System.out.println("Error: Please enter an integer.");
             } catch (IllegalArgumentException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
-
-        return builder.build();
     }
 }

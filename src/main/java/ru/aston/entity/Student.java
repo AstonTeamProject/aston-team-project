@@ -62,7 +62,7 @@ public class Student {
             if (gradeBookNumber <= 0) {
                 throw new IllegalArgumentException("Grade book number can't be empty.");
             }
-            if (averageScore <= 0 || averageScore > 10) {
+            if (averageScore < 0 || averageScore > 10) {
                 throw new IllegalArgumentException("Average score should be between 0 and 10");
             }
         }

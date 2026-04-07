@@ -1,5 +1,7 @@
 package ru.aston.entity;
 
+import java.util.Locale;
+
 public class Student {
     private final String groupNumber;
     private final double averageScore;
@@ -68,7 +70,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return String.format("Student [group = '%s', score = %.2f, book = %d]",
+        return String.format(Locale.ROOT,"Student [group = '%s', score = %.2f, book = %d]",
                 groupNumber, averageScore, gradeBookNumber);
     }
 }

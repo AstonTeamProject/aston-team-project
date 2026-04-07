@@ -16,7 +16,7 @@ public class CustomStudentCollection extends AbstractList<Student> {
 
     public boolean add(Student student) {
         if (student == null) return false;
-        if (Arrays.stream(elements, 0, size).anyMatch(s -> s.getGroupNumber().equals(student.getGroupNumber()))) {
+        if (Arrays.stream(elements, 0, size).anyMatch(s -> s.getGradeBookNumber()== student.getGradeBookNumber())) {
             return false;
         }
         ensureCapacity();
@@ -26,9 +26,8 @@ public class CustomStudentCollection extends AbstractList<Student> {
 
     private void ensureCapacity() {
         if (size == elements.length) {
-            Student[] newElements = new Student[elements.length * 2];
-            System.arraycopy(elements, 0, newElements, 0, size);
-            elements = newElements;
+            int newSize = elements.length * 2;
+            elements = Arrays.copyOf(elements, newSize);
         }
     }
 

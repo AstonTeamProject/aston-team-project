@@ -1,6 +1,7 @@
 package ru.aston.entity;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class Student {
     private final String groupNumber;
@@ -72,5 +73,20 @@ public class Student {
     public String toString() {
         return String.format(Locale.ROOT,"Student [group = '%s', score = %.2f, book = %d]",
                 groupNumber, averageScore, gradeBookNumber);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Double.compare(averageScore, student.averageScore) == 0 &&
+                gradeBookNumber == student.gradeBookNumber &&
+                Objects.equals(groupNumber, student.groupNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupNumber, averageScore, gradeBookNumber);
     }
 }

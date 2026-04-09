@@ -22,8 +22,16 @@ public class StudentFileReader {
     public StudentFileReader(String path) {
         this.filePath = Path.of(path);
     }
-
-    public List<Student> readAll(int size) {
+    public List<Student> readAll(int size) IOException {
+    if (Files.notExists(filePath)) {
+        throw new FileNotFoundException("File does not exist: " + filePath);
+    }
+    if (Files.isDirectory(filePath)) {
+        throw new IllegalArgumentException("Path is a directory, not a file: " + filePath);
+    }
+    if (!Files.isReadable(filePath)) {
+        throw new IOException("File is not readable: " + filePath);
+    }
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
             return lines
                     .filter(line -> !line.isBlank())
@@ -36,14 +44,12 @@ public class StudentFileReader {
         }
         return null;
     }
-
     private Optional<Student> parseLine(String line) {
         String[] parts = line.split(DELIMITER);
         if (parts.length != EXPECTED_PARTS_COUNT) {
             System.out.println("Invalid format, skipped: " + line);
             return Optional.empty();
         }
-
         Student student;
         try {
             String groupNumber = parts[0].trim();
@@ -71,7 +77,6 @@ public class StudentFileReader {
             System.out.println("Invalid argument: " + e.getMessage());
             return Optional.empty();
         }
-
         return Optional.of(student);
     }
 }

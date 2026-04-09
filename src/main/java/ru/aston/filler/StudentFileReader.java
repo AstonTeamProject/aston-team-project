@@ -45,7 +45,6 @@ public class StudentFileReader {
             System.out.println("Invalid format, skipped: " + line);
             return Optional.empty();
         }
-
         Student student;
         try {
             String groupNumber = parts[0].trim();
@@ -61,7 +60,6 @@ public class StudentFileReader {
             if (gradeBookNumber <= 0) {
                 throw new IllegalArgumentException("gradeBookNumber must be positive");
             }
-
             student = Student.builder().groupNumber(groupNumber).averageScore(averageScore).gradeBookNumber(gradeBookNumber).build();
         } catch (NumberFormatException e) {
             System.out.println("Error parsing number: " + e.getMessage());
@@ -70,7 +68,6 @@ public class StudentFileReader {
             System.out.println("Invalid argument: " + e.getMessage());
             return Optional.empty();
         }
-
         return Optional.of(student);
     }
 }

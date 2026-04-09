@@ -22,6 +22,7 @@ public class StudentFileReader {
     public StudentFileReader(String path) {
         this.filePath = Path.of(path);
     }
+    
     public List<Student> readAll(int size) IOException {
     if (Files.notExists(filePath)) {
         throw new FileNotFoundException("File does not exist: " + filePath);
@@ -44,6 +45,7 @@ public class StudentFileReader {
         }
         return null;
     }
+    
     private Optional<Student> parseLine(String line) {
         String[] parts = line.split(DELIMITER);
         if (parts.length != EXPECTED_PARTS_COUNT) {

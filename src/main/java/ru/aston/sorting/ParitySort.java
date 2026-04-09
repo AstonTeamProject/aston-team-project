@@ -1,12 +1,11 @@
 package ru.aston.sorting;
 
 import ru.aston.entity.Student;
-import ru.aston.sorting.comparator.StudentComparatorFactory;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ParitySort extends QuickSort {
     @Override
@@ -14,21 +13,20 @@ public class ParitySort extends QuickSort {
         if (list == null || list.size() <= 1) {
             return;
         }
-        comparator = StudentComparatorFactory.create(
-                StudentComparatorFactory.Field.GRADE_BOOK_NUMBER, SortDirection.ASC);
-        List<Student> evenValues = new ArrayList<>();
+        List<Student> evenValues;
+        evenValues = list.stream().filter(i -> i.getGradeBookNumber() % 2 == 0).collect(Collectors.toList());
         for (Student obj : list) {
             if (obj.getGradeBookNumber() % 2 == 0) {
                 evenValues.add(obj);
             }
         }
-
-        quickSort(evenValues, 0, evenValues.size() - 1, comparator);
-
-        Iterator<Student> evenIterator = evenValues.iterator();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getGradeBookNumber() % 2 == 0) {
-                list.set(i, evenIterator.next());
+        if (evenValues.size() > 0) {
+            quickSort(evenValues, 0, evenValues.size() - 1, comparator);
+            Iterator<Student> evenIterator = evenValues.iterator();
+            for (int i = 0; i < list.size() && evenIterator.hasNext(); i++) {
+                if (list.get(i).getGradeBookNumber() % 2 == 0) {
+                    list.set(i, evenIterator.next());
+                }
             }
         }
     }

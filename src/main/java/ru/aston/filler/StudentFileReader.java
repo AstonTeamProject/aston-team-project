@@ -3,7 +3,6 @@ package ru.aston.filler;
 import ru.aston.entity.Student;
 
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,33 +23,29 @@ public class StudentFileReader {
     public StudentFileReader(String path) {
         this.filePath = Path.of(path);
     }
-    
-    public List<Student> readAll(int size) throws IOException {
-    if (Files.notExists(filePath)) {
-        throw new FileNotFoundException("File does not exist: " + filePath);
-    }
-    if (Files.isDirectory(filePath)) {
-        throw new IllegalArgumentException("Path is a directory, not a file: " + filePath);
-    }
-        try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
-            return lines
-                    .filter(line -> !line.isBlank())
-                    .map(this::parseLine)
-                    .flatMap(Optional::stream)
-                    .limit(size)
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            System.out.println();
+
+    public List<Student> readAll(int size) {
+        if (Files.exists(filePath) && Files.isRegularFile(filePath)) {
+            try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
+                return lines.filter(line -> !line.isBlank()).map(this::parseLine).flatMap(Optional::stream).limit(size).collect(Collectors.toList());
+            } catch (IOException e) {
+                System.out.println("Error reading file: " + filePath);
+            }
+        } else if (Files.notExists(filePath)) {
+            System.out.println("File does not exist: " + filePath);
+        } else if (Files.isDirectory(filePath)) {
+            System.out.println("Path is a directory, not a file: " + filePath);
         }
         return null;
     }
-    
+
     private Optional<Student> parseLine(String line) {
         String[] parts = line.split(DELIMITER);
         if (parts.length != EXPECTED_PARTS_COUNT) {
             System.out.println("Invalid format, skipped: " + line);
             return Optional.empty();
         }
+
         Student student;
         try {
             String groupNumber = parts[0].trim();
@@ -66,11 +61,8 @@ public class StudentFileReader {
             if (gradeBookNumber <= 0) {
                 throw new IllegalArgumentException("gradeBookNumber must be positive");
             }
-            student = Student.builder()
-                    .groupNumber(groupNumber)
-                    .averageScore(averageScore)
-                    .gradeBookNumber(gradeBookNumber)
-                    .build();
+
+            student = Student.builder().groupNumber(groupNumber).averageScore(averageScore).gradeBookNumber(gradeBookNumber).build();
         } catch (NumberFormatException e) {
             System.out.println("Error parsing number: " + e.getMessage());
             return Optional.empty();
@@ -78,9 +70,7 @@ public class StudentFileReader {
             System.out.println("Invalid argument: " + e.getMessage());
             return Optional.empty();
         }
+
         return Optional.of(student);
     }
 }
-
-
-

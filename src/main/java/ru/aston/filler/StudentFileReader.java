@@ -23,7 +23,7 @@ public class StudentFileReader {
         this.filePath = Path.of(path);
     }
     
-    public List<Student> readAll(int size) IOException {
+    public List<Student> readAll(int size) throws IOException {
     if (Files.notExists(filePath)) {
         throw new FileNotFoundException("File does not exist: " + filePath);
     }

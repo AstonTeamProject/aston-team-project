@@ -3,6 +3,7 @@ package ru.aston.filler;
 import ru.aston.entity.Student;
 
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 
 public class StudentFileReader {
     private static final double MIN_SCORE = 0.0;
@@ -29,9 +31,6 @@ public class StudentFileReader {
     }
     if (Files.isDirectory(filePath)) {
         throw new IllegalArgumentException("Path is a directory, not a file: " + filePath);
-    }
-    if (!Files.isReadable(filePath)) {
-        throw new IOException("File is not readable: " + filePath);
     }
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
             return lines

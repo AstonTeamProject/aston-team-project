@@ -18,7 +18,15 @@ public class RandomFiller implements DataFiller {
                 .collect(Collectors.toList());
     }
 
-    public Student randomizeStudent() {
+    private Student randomizeStudent() {
+        return Student.builder()
+                .groupNumber(randomizeGroupNumber())
+                .averageScore(randomizeAverageScore())
+                .gradeBookNumber(randomizeGradeBookNumber())
+                .build();
+    }
+
+    private String randomizeGroupNumber() {
         int maxYear = 26;
         int minYear = 21;
         int maxSubGroup = 4;
@@ -29,16 +37,16 @@ public class RandomFiller implements DataFiller {
         groupNumber.append("-" + groupNames.get((int) ((Math.random() * (groupNames.size())))));
         int subGroup = (int) (Math.random() * maxSubGroup) + minSubGroup;
         groupNumber.append("-" + subGroup);
+        return groupNumber.toString();
+    }
 
+    private double randomizeAverageScore() {
         double averageScore = 10 * Math.random();
         averageScore = Math.round(averageScore * 100.0) / 100.0;
+        return averageScore;
+    }
 
-        int gradeBookNumber = (int) (Math.random() * 999999);
-
-        return Student.builder()
-                .groupNumber(groupNumber.toString())
-                .averageScore(averageScore)
-                .gradeBookNumber(gradeBookNumber)
-                .build();
+    private Integer randomizeGradeBookNumber() {
+        return (int) (Math.random() * 999999);
     }
 }

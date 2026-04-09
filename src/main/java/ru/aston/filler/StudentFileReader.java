@@ -11,14 +11,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
 public class StudentFileReader {
     private static final double MIN_SCORE = 0.0;
     private static final double MAX_SCORE = 10.0;
     private static final int EXPECTED_PARTS_COUNT = 3;
     private static final String DELIMITER = ",";
-
+    private static final String FILE_PATH_DEFAULT = "src/main/resources/students.txt";
     private final Path filePath;
+
+    public StudentFileReader() {
+        this.filePath = Path.of(FILE_PATH_DEFAULT);
+    }
 
     public StudentFileReader(String path) {
         this.filePath = Path.of(path);
@@ -27,15 +30,17 @@ public class StudentFileReader {
     public List<Student> readAll(int size) {
         if (Files.exists(filePath) && Files.isRegularFile(filePath)) {
             try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
-                return lines.filter(line -> !line.isBlank()).map(this::parseLine).flatMap(Optional::stream).limit(size).collect(Collectors.toList());
+                return lines
+                        .filter(line -> !line.isBlank())
+                        .map(this::parseLine)
+                        .flatMap(Optional::stream)
+                        .limit(size)
+                        .collect(Collectors.toList());
             } catch (IOException e) {
                 System.out.println("Error reading file: " + filePath);
             }
-        } else if (Files.notExists(filePath)) {
-            System.out.println("File does not exist: " + filePath);
-        } else if (Files.isDirectory(filePath)) {
-            System.out.println("Path is a directory, not a file: " + filePath);
         }
+        System.out.println("File does not exist or path is a directory: " + filePath);
         return null;
     }
 
@@ -51,7 +56,6 @@ public class StudentFileReader {
             String groupNumber = parts[0].trim();
             double averageScore = Double.parseDouble(parts[1].trim());
             int gradeBookNumber = Integer.parseInt(parts[2].trim());
-
             if (groupNumber.isEmpty()) {
                 throw new IllegalArgumentException("groupNumber is empty");
             }
@@ -61,8 +65,11 @@ public class StudentFileReader {
             if (gradeBookNumber <= 0) {
                 throw new IllegalArgumentException("gradeBookNumber must be positive");
             }
-
-            student = Student.builder().groupNumber(groupNumber).averageScore(averageScore).gradeBookNumber(gradeBookNumber).build();
+            student = Student.builder()
+                    .groupNumber(groupNumber)
+                    .averageScore(averageScore)
+                    .gradeBookNumber(gradeBookNumber)
+                    .build();
         } catch (NumberFormatException e) {
             System.out.println("Error parsing number: " + e.getMessage());
             return Optional.empty();
@@ -70,7 +77,6 @@ public class StudentFileReader {
             System.out.println("Invalid argument: " + e.getMessage());
             return Optional.empty();
         }
-
         return Optional.of(student);
     }
 }

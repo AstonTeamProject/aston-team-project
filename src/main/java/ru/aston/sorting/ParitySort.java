@@ -15,11 +15,6 @@ public class ParitySort extends QuickSort {
         }
         List<Student> evenValues;
         evenValues = list.stream().filter(i -> i.getGradeBookNumber() % 2 == 0).collect(Collectors.toList());
-        for (Student obj : list) {
-            if (obj.getGradeBookNumber() % 2 == 0) {
-                evenValues.add(obj);
-            }
-        }
         if (evenValues.size() > 0) {
             quickSort(evenValues, 0, evenValues.size() - 1, comparator);
             Iterator<Student> evenIterator = evenValues.iterator();

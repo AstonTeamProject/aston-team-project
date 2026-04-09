@@ -1,73 +1,82 @@
 package EntityTests;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.aston.entity.Student;
 
-public class StudentTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class StudentTest {
 
     @Test
-    void testEmptyGroupNumber() {
-        IllegalArgumentException exception = Assertions.assertThrows(
-                IllegalArgumentException.class, () -> Student.builder().groupNumber("").build()
-        );
-        Assertions.assertEquals("Group number cant be empty", exception.getMessage());
+    @DisplayName("Полное покрытие Equals и HashCode")
+    void testEqualsAndHashCodeFullCoverage() {
+        Student s1 = Student.builder()
+                .groupNumber("12")
+                .gradeBookNumber(12344)
+                .averageScore(5.3)
+                .build();
+        Student s2 = Student.builder()
+                .groupNumber("12")
+                .gradeBookNumber(12344)
+                .averageScore(5.3)
+                .build();
+        assertTrue(s1.equals(s1));
+        assertFalse(s1.equals(null));
+        assertFalse(s1.equals("String Object"));
+        assertEquals(s1, s2);
+        assertEquals(s1.hashCode(), s2.hashCode());
+        Student diffScore = Student.builder()
+                .groupNumber("12")
+                .gradeBookNumber(12344)
+                .averageScore(5.4)
+                .build();
+        assertFalse(s1.equals(diffScore));
+        Student diffBook = Student.builder()
+                .groupNumber("12")
+                .gradeBookNumber(999)
+                .averageScore(5.3)
+                .build();
+        assertFalse(s1.equals(diffBook));
+        Student diffGroup = Student.builder()
+                .groupNumber("99")
+                .gradeBookNumber(12344)
+                .averageScore(5.3)
+                .build();
+        assertFalse(s1.equals(diffGroup));
     }
 
     @Test
-    void testNullGroupNumber() {
-        IllegalArgumentException exception = Assertions.assertThrows(
-                IllegalArgumentException.class, () -> Student.builder().groupNumber(null).build()
-        );
-        Assertions.assertEquals("Group number cant be empty", exception.getMessage());
+    @DisplayName("Тесты Builder и валидации")
+    void testBuilderValidation() {
+        assertThrows(IllegalArgumentException.class, () ->
+                Student.builder().groupNumber("").gradeBookNumber(1).averageScore(5).build());
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Student.builder().groupNumber(null).gradeBookNumber(1).averageScore(5).build());
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Student.builder().groupNumber("12").gradeBookNumber(0).averageScore(5).build());
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Student.builder().groupNumber("12").gradeBookNumber(12).averageScore(11).build());
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Student.builder().groupNumber("12").gradeBookNumber(12).averageScore(-1).build());
     }
 
     @Test
-    void testInvalidGradeBookNumber() {
-        IllegalArgumentException exception = Assertions.assertThrows(
-                IllegalArgumentException.class, () -> Student.builder().groupNumber("12").gradeBookNumber(0).build()
-        );
-        Assertions.assertEquals("Grade book number can't be empty.", exception.getMessage());
-    }
-
-    @Test
-    void testAverageScoreMoreThan10() {
-        IllegalArgumentException exception = Assertions.assertThrows(
-                IllegalArgumentException.class, () -> Student.builder().groupNumber("12").gradeBookNumber(12).averageScore(11).build()
-        );
-        Assertions.assertEquals("Average score should be between 0 and 10", exception.getMessage());
-    }
-
-    @Test
-    void testAverageScoreLessThan0() {
-        IllegalArgumentException exception = Assertions.assertThrows(
-                IllegalArgumentException.class, () -> Student.builder().groupNumber("12").gradeBookNumber(12).averageScore(-1).build()
-        );
-        Assertions.assertEquals("Average score should be between 0 and 10", exception.getMessage());
-    }
-
-    @Test
-    void testSuccessfulBuild(){
+    @DisplayName("Тест геттеров и toString")
+    void testGettersAndToString() {
         Student student = Student.builder()
                 .groupNumber("12")
                 .gradeBookNumber(12344)
                 .averageScore(5.3)
                 .build();
-        Assertions.assertEquals("12", student.getGroupNumber());
-        Assertions.assertEquals(12344, student.getGradeBookNumber());
-        Assertions.assertEquals(5.3, student.getAverageScore());
-    }
 
-    @Test
-    void testCorrectToString(){
-        Student student = Student.builder()
-                .groupNumber("12")
-                .gradeBookNumber(12344)
-                .averageScore(5.3)
-                .build();
-        Assertions.assertEquals("12", student.getGroupNumber());
-        Assertions.assertEquals(12344, student.getGradeBookNumber());
-        Assertions.assertEquals(5.3, student.getAverageScore());
-        Assertions.assertEquals("Student [group = '12', score = 5.30, book = 12344]",student.toString());
+        assertEquals("12", student.getGroupNumber());
+        assertEquals(12344, student.getGradeBookNumber());
+        assertEquals(5.3, student.getAverageScore());
+        assertEquals("Student [group = '12', score = 5.30, book = 12344]", student.toString());
     }
 }

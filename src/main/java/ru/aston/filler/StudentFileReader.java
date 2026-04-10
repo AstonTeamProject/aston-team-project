@@ -11,12 +11,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class StudentFileReader {
+public class StudentFileReader implements DataFiller {
     private static final double MIN_SCORE = 0.0;
     private static final double MAX_SCORE = 10.0;
     private static final int EXPECTED_PARTS_COUNT = 3;
     private static final String DELIMITER = ",";
-    private static final String FILE_PATH_DEFAULT = "src/main/resources/students.txt";
+    private static final String FILE_PATH_DEFAULT = "C:\\Users\\qwerty\\IdeaProjects\\Projects\\aston-team-project\\src\\main\\resources\\students.txt";
     private final Path filePath;
 
     public StudentFileReader() {
@@ -25,6 +25,11 @@ public class StudentFileReader {
 
     public StudentFileReader(String path) {
         this.filePath = Path.of(path);
+    }
+
+    @Override
+    public List<Student> fill(int size) {
+        return readAll(size);
     }
 
     public List<Student> readAll(int size) {

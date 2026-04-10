@@ -7,11 +7,11 @@ import java.util.List;
 public class FillerContext {
     private DataFiller dataFiller;
 
-    public  FillerContext (DataFiller dataFiller){
-        this.dataFiller=dataFiller;
+    public FillerContext(DataFiller dataFiller) {
+        this.dataFiller = dataFiller;
     }
 
-    public DataFiller getDataFiller(){
+    public DataFiller getDataFiller() {
         return dataFiller;
     }
 

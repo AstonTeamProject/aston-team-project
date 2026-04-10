@@ -1,5 +1,6 @@
 package ru.aston.filler;
 
+import ru.aston.entity.CustomStudentCollection;
 import ru.aston.entity.Student;
 
 import java.util.List;
@@ -28,13 +29,13 @@ public class ManualFiller implements DataFiller {
                     System.out.printf("\nStudent №%d:\n", i + 1);
                     return readStudent();
                 })
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(CustomStudentCollection::new));
 
         System.out.println("Manual filling completed.");
         return students;
     }
 
-    private Student readStudent() {
+    public Student readStudent() {
         return Student.builder()
                 .groupNumber(readGroupNumber())
                 .averageScore(readAverageScore())

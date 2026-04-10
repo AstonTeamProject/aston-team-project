@@ -1,5 +1,6 @@
 package ru.aston.filler;
 
+import ru.aston.entity.CustomStudentCollection;
 import ru.aston.entity.Student;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class RandomFiller implements DataFiller {
     public List<Student> fill(int size) {
         return IntStream.range(0, size)
                 .mapToObj(i -> randomizeStudent())
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(CustomStudentCollection::new));
     }
 
     private Student randomizeStudent() {

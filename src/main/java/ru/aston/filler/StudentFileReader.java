@@ -1,5 +1,6 @@
 package ru.aston.filler;
 
+import ru.aston.entity.CustomStudentCollection;
 import ru.aston.entity.Student;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class StudentFileReader implements DataFiller {
                         .map(this::parseLine)
                         .flatMap(Optional::stream)
                         .limit(size)
-                        .collect(Collectors.toList());
+                        .collect(Collectors.toCollection(CustomStudentCollection::new));
             } catch (IOException e) {
                 System.out.println("Error reading file: " + filePath);
             }

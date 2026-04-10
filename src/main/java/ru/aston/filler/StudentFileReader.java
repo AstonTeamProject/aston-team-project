@@ -16,7 +16,7 @@ public class StudentFileReader implements DataFiller {
     private static final double MAX_SCORE = 10.0;
     private static final int EXPECTED_PARTS_COUNT = 3;
     private static final String DELIMITER = ",";
-    private static final String FILE_PATH_DEFAULT = "C:\\Users\\qwerty\\IdeaProjects\\Projects\\aston-team-project\\src\\main\\resources\\students.txt";
+    private static final String FILE_PATH_DEFAULT = "src/main/resources/students.txt";
     private final Path filePath;
 
     public StudentFileReader() {

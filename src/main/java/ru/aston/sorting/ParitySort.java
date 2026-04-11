@@ -13,9 +13,12 @@ public class ParitySort extends QuickSort {
         if (list == null || list.size() <= 1) {
             return;
         }
-        List<Student> evenValues;
-        evenValues = list.stream().filter(i -> i.getGradeBookNumber() % 2 == 0).collect(Collectors.toList());
-        if (evenValues.size() > 0) {
+
+        List<Student> evenValues = list.stream()
+                .filter(i -> i.getGradeBookNumber() % 2 == 0)
+                .collect(Collectors.toList());
+
+        if (!evenValues.isEmpty()) {
             quickSort(evenValues, 0, evenValues.size() - 1, comparator);
             Iterator<Student> evenIterator = evenValues.iterator();
             for (int i = 0; i < list.size() && evenIterator.hasNext(); i++) {

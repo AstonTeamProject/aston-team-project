@@ -1,5 +1,6 @@
 package ru.aston.filler;
 
+import ru.aston.entity.CustomStudentCollection;
 import ru.aston.entity.Student;
 
 import java.util.List;
@@ -7,19 +8,18 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class RandomFiller implements DataFiller {
-    private static final int maxYear = 26;
-    private static final int minYear = 21;
-    private static final int maxSubGroup = 4;
-    private static final int minSubGroup = 1;
-    private final List<String> groupNames = List.of("МАШ", "ФИТ", "ТБ", "ИКБО", "ИППО");
+    private static final int MAX_YEAR = 26;
+    private static final int MIN_YEAR = 21;
+    private static final int MAX_SUB_GROUP = 4;
+    private static final int MIN_SUB_GROUP = 1;
+    private static final int MAX_GRADE_BOOK_NUMBER = 999999;
+    private static final List<String> GROUP_NAMES = List.of("МАШ", "ФИТ", "ТБ", "ИКБО", "ИППО");
 
     @Override
     public List<Student> fill(int size) {
         return IntStream.range(0, size)
-                .mapToObj(i -> {
-                    return randomizeStudent();
-                })
-                .collect(Collectors.toList());
+                .mapToObj(i -> randomizeStudent())
+                .collect(Collectors.toCollection(CustomStudentCollection::new));
     }
 
     private Student randomizeStudent() {
@@ -32,10 +32,10 @@ public class RandomFiller implements DataFiller {
 
     private String randomizeGroupNumber() {
         StringBuilder groupNumber = new StringBuilder();
-        groupNumber.append((int) ((Math.random() * ((maxYear + 1) - minYear)) + minYear));
-        groupNumber.append("-" + groupNames.get((int) ((Math.random() * (groupNames.size())))));
-        int subGroup = (int) (Math.random() * maxSubGroup) + minSubGroup;
-        groupNumber.append("-" + subGroup);
+        groupNumber.append((int) ((Math.random() * ((MAX_YEAR + 1) - MIN_YEAR)) + MIN_YEAR));
+        groupNumber.append("-").append(GROUP_NAMES.get((int) ((Math.random() * (GROUP_NAMES.size())))));
+        int subGroup = (int) (Math.random() * MAX_SUB_GROUP) + MIN_SUB_GROUP;
+        groupNumber.append("-").append(subGroup);
         return groupNumber.toString();
     }
 
@@ -46,6 +46,6 @@ public class RandomFiller implements DataFiller {
     }
 
     private Integer randomizeGradeBookNumber() {
-        return (int) (Math.random() * 999999);
+        return (int) (Math.random() * MAX_GRADE_BOOK_NUMBER);
     }
 }

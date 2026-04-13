@@ -96,7 +96,7 @@ public class ParitySortTest {
     }
 
     @Test
-    void testCaseFromColleague() {
+    void sort_ShouldKeepOddElementsInPlaceWhileSortingEvens() {
         List<Student> list = new ArrayList<>(Arrays.asList(
                 createStudent(1),
                 createStudent(4),

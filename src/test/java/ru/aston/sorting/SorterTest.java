@@ -1,11 +1,8 @@
-package sortingTests;
+package ru.aston.sorting;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.aston.entity.Student;
-import ru.aston.sorting.QuickSort;
-import ru.aston.sorting.SortDirection;
-import ru.aston.sorting.Sorter;
 import ru.aston.sorting.comparator.StudentComparatorFactory;
 
 import java.util.ArrayList;

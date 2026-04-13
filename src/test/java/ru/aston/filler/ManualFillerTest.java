@@ -1,8 +1,7 @@
-package filler;
+package ru.aston.filler;
 
 import org.junit.jupiter.api.Test;
 import ru.aston.entity.Student;
-import ru.aston.filler.ManualFiller;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Scanner;

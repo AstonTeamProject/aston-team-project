@@ -1,10 +1,8 @@
-package EntityTests;
+package ru.aston.entity;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.aston.entity.CustomStudentCollection;
-import ru.aston.entity.Student;
 
 import static org.junit.jupiter.api.Assertions.*;
 

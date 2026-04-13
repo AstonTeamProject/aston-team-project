@@ -1,9 +1,8 @@
-package threading;
+package ru.aston.threading;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.aston.entity.Student;
-import ru.aston.threading.ThreadedCounter;
 
 import java.util.AbstractList;
 import java.util.ArrayList;

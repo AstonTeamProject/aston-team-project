@@ -1,4 +1,4 @@
-package sortingTests.comparatorTests;
+package ru.aston.sorting.comparatorTests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
